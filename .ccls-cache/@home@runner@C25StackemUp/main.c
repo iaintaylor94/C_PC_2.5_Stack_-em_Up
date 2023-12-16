@@ -8,13 +8,19 @@
 // Constants
 const int gMaxLineLength = 162;
 const int gNumCardsInDeck = 52;
+const int gNumCardsPerSuit = 13;
 const int gMaxNumShuffles = 100;
+
+enum suit { CLUBS, DIAMONDS, HEARTS, SPADES };
+enum value { TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE };
 
 // Declare file handles
 FILE *gInputFile;
 
 // Declare Structures / Arrays
 int gShuffleOrders[gMaxNumShuffles][gNumCardsInDeck];
+int gCards[gNumCardsInDeck];
+
 
 // Declare Functions
 // File Handling
@@ -27,6 +33,11 @@ void removeBlankLine (FILE*);
 int getNumShuffles (FILE*);
 void getShuffle (int [gMaxNumShuffles][gNumCardsInDeck], int, FILE*);
 void printShuffle (int, int[gMaxNumShuffles][gNumCardsInDeck]);
+
+// Card Translations
+enum value getCardValue (int);
+enum suit getCardSuit (int);
+
 
 int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION START-----------------------------*/
@@ -105,4 +116,25 @@ void printShuffle (int shuffleNum, int shuffle[gMaxNumShuffles][gNumCardsInDeck]
     printf (" %d", shuffle[shuffleNum][i]);
   }
   printf ("\n\n");
+}
+
+// Card Translations
+enum value getCardValue (int card) {
+  card -= 1;
+  return (card % gNumCardsPerSuit);
+}
+enum suit getCardSuit (int card) {
+  card -= 1;
+  if (card < gNumCardsPerSuit) {
+    return (CLUBS);
+  }
+  else if (card < (gNumCardsPerSuit * 2)) {
+    return (DIAMONDS);
+  }
+  else if (card < (gNumCardsPerSuit * 3)) {
+    return (HEARTS);
+  }
+  else {
+    return (SPADES);
+  }
 }
