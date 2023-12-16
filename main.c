@@ -34,9 +34,18 @@ int getNumShuffles (FILE*);
 void getShuffle (int [gMaxNumShuffles][gNumCardsInDeck], int, FILE*);
 void printShuffle (int, int[gMaxNumShuffles][gNumCardsInDeck]);
 
+// Initialise deck
+void initDeck (int [gNumCardsInDeck]);
+
 // Card Translations
 enum value getCardValue (int);
 enum suit getCardSuit (int);
+
+// Print Cards
+void printValue(enum value);
+void printSuit(enum suit);
+void printCard (int);
+void printDeck (int [gNumCardsInDeck]);
 
 
 int main(int argc, char *argv[]) {
@@ -53,6 +62,10 @@ int main(int argc, char *argv[]) {
   /*-------------------------------FILE INITIALIZATION END--------------------------------*/
   /*--------------------------------MAIN PROGRAM START------------------------------------*/
 
+  // Initialise deck
+  initDeck(gCards);
+  printDeck(gCards);
+  
   int numCases = getNumCases (gInputFile); printf ("numCases = %d\n", numCases);
   removeBlankLine (gInputFile);
   int numShuffles = getNumShuffles (gInputFile); printf ("numShuffles = %d\n", numShuffles);
@@ -118,13 +131,18 @@ void printShuffle (int shuffleNum, int shuffle[gMaxNumShuffles][gNumCardsInDeck]
   printf ("\n\n");
 }
 
+// Initialise deck
+void initDeck (int deck [gNumCardsInDeck]) {
+  for (int i = 0; i < gNumCardsInDeck; i++) {
+    deck[i] = i;
+  }
+}
+
 // Card Translations
 enum value getCardValue (int card) {
-  card -= 1;
   return (card % gNumCardsPerSuit);
 }
 enum suit getCardSuit (int card) {
-  card -= 1;
   if (card < gNumCardsPerSuit) {
     return (CLUBS);
   }
@@ -137,4 +155,83 @@ enum suit getCardSuit (int card) {
   else {
     return (SPADES);
   }
+}
+
+// Print Cards
+void printValue (enum value value) {
+  switch (value) {
+    case TWO:
+      printf ("Two");
+      break;
+    case THREE:
+      printf ("Three");
+      break;
+    case FOUR:
+      printf ("Four");
+      break;
+    case FIVE:
+      printf ("Five");
+      break;
+    case SIX:
+      printf ("Six");
+      break;
+    case SEVEN:
+      printf ("Seven");
+      break;
+    case EIGHT:
+      printf ("Eight");
+      break;
+    case NINE:
+      printf ("Nine");
+      break;
+    case TEN:
+      printf ("Ten");
+      break;
+    case JACK:
+      printf ("Jack");
+      break;
+    case QUEEN:
+      printf ("Queen");
+      break;
+    case KING:
+      printf ("King");
+      break;
+    case ACE:
+      printf ("Ace");
+      break;
+    default:
+      printf ("Invalid Value");
+      break;
+  }
+}
+void printSuit (enum suit suit) {
+  switch (suit) {
+    case CLUBS:
+      printf ("Clubs");
+      break;
+    case DIAMONDS:
+      printf ("Diamonds");
+      break;
+    case HEARTS:
+      printf ("Hearts");
+      break;
+    case SPADES:
+      printf ("Spades");
+      break;
+    default:
+      printf ("Invalid Suit");
+      break;
+  }
+}
+void printCard (int card) {
+  printValue(getCardValue(card));
+  printf (" of ");
+  printSuit(getCardSuit(card));
+  printf ("\n");
+}
+void printDeck (int deck [gNumCardsInDeck]) {
+  for (int i = 0; i < gNumCardsInDeck; i++) {
+    printCard (deck[i]);
+  }
+  printf ("\n");
 }
