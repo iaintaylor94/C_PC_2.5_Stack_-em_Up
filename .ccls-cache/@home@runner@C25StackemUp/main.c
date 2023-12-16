@@ -34,8 +34,9 @@ int getNumShuffles (FILE*);
 void getShuffle (int [gMaxNumShuffles][gNumCardsInDeck], int, FILE*);
 void printShuffle (int, int[gMaxNumShuffles][gNumCardsInDeck]);
 
-// Initialise deck
+// Initialise and Shuffle Deck
 void initDeck (int [gNumCardsInDeck]);
+void shuffleDeck (int, int[gMaxNumShuffles][gNumCardsInDeck], int[gNumCardsInDeck]);
 
 // Card Translations
 enum value getCardValue (int);
@@ -76,7 +77,8 @@ int main(int argc, char *argv[]) {
     printShuffle(i, gShuffleOrders);
   }
 
-
+  shuffleDeck (0, gShuffleOrders, gCards);
+  printDeck (gCards);
 
   
   
@@ -131,10 +133,19 @@ void printShuffle (int shuffleNum, int shuffle[gMaxNumShuffles][gNumCardsInDeck]
   printf ("\n\n");
 }
 
-// Initialise deck
+// Initialise and Shuffle Deck
 void initDeck (int deck [gNumCardsInDeck]) {
   for (int i = 0; i < gNumCardsInDeck; i++) {
     deck[i] = i;
+  }
+}
+void shuffleDeck (int shuffleNum, int shuffles[gMaxNumShuffles][gNumCardsInDeck], int deck[gNumCardsInDeck]) {
+  int tempDeck[gNumCardsInDeck] = { 0 };
+  for (int i = 0; i < gNumCardsInDeck; i++) {
+    tempDeck[i] = deck[shuffles[shuffleNum][i]];
+  }
+  for (int i = 0; i < gNumCardsInDeck; i++) {
+    deck[i] = tempDeck[i];
   }
 }
 
