@@ -33,6 +33,7 @@ void removeBlankLine (FILE*);
 int getNumShuffles (FILE*);
 void getShuffle (int [gMaxNumShuffles][gNumCardsInDeck], int, FILE*);
 void printShuffle (int, int[gMaxNumShuffles][gNumCardsInDeck]);
+int getShuffleNum (FILE*);
 
 // Initialise and Shuffle Deck
 void initDeck (int [gNumCardsInDeck]);
@@ -65,19 +66,22 @@ int main(int argc, char *argv[]) {
 
   // Initialise deck
   initDeck(gCards);
-  printDeck(gCards);
-  
-  int numCases = getNumCases (gInputFile); printf ("numCases = %d\n", numCases);
-  removeBlankLine (gInputFile);
-  int numShuffles = getNumShuffles (gInputFile); printf ("numShuffles = %d\n", numShuffles);
 
+  // Get input
+  int numCases = getNumCases (gInputFile);
+  removeBlankLine (gInputFile);
+  int numShuffles = getNumShuffles (gInputFile);
   printf ("\n");
+
   for (int i = 0; i < numShuffles; i++) {
     getShuffle (gShuffleOrders, i, gInputFile);
-    printShuffle(i, gShuffleOrders);
   }
 
-  shuffleDeck (0, gShuffleOrders, gCards);
+  int deckNum = 0;
+  while (deckNum = getShuffleNum (gInputFile) != -1) {
+    shuffleDeck (deckNum, gShuffleOrders, gCards);
+  }
+  
   printDeck (gCards);
 
   
@@ -131,6 +135,15 @@ void printShuffle (int shuffleNum, int shuffle[gMaxNumShuffles][gNumCardsInDeck]
     printf (" %d", shuffle[shuffleNum][i]);
   }
   printf ("\n\n");
+}
+int getShuffleNum (FILE* fp) {
+  char str[gMaxLineLength] = { 0 };
+  if (fgets(str, gMaxLineLength, fp) == NULL) {
+    return (-1);
+  }
+  else {
+    return (atoi(str));
+  }
 }
 
 // Initialise and Shuffle Deck
