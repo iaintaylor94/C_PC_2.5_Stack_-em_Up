@@ -66,6 +66,7 @@ int main(int argc, char *argv[]) {
 
   // Initialise deck
   initDeck(gCards);
+  printDeck (gCards);
 
   // Get input
   int numCases = getNumCases (gInputFile);
@@ -77,9 +78,12 @@ int main(int argc, char *argv[]) {
     getShuffle (gShuffleOrders, i, gInputFile);
   }
 
-  int deckNum = 0;
-  while (deckNum = getShuffleNum (gInputFile) != -1) {
+  int deckNum = getShuffleNum(gInputFile);
+  while (deckNum != -1) {
+    printf ("deckNum = %d\n", deckNum);
     shuffleDeck (deckNum, gShuffleOrders, gCards);
+    printDeck (gCards);
+    deckNum = getShuffleNum(gInputFile);
   }
   
   printDeck (gCards);
@@ -142,7 +146,7 @@ int getShuffleNum (FILE* fp) {
     return (-1);
   }
   else {
-    return (atoi(str));
+    return (atoi(str) - 1);
   }
 }
 
