@@ -85,8 +85,7 @@ A blank line if computing the next test case, or EOF if at the end of the final 
 >9 of Spades                                 
 >10 of Spades                                    
 >Jack of Spades                                   
->Queen of Spades                                       
->King of Spades                                
+>Queen of Spades                                                                    
 >Ace of Spades                                          
 >3 of Clubs                                            
 

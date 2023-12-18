@@ -66,7 +66,6 @@ int main(int argc, char *argv[]) {
 
   // Initialise deck
   initDeck(gCards);
-  printDeck (gCards);
 
   // Get input
   int numCases = getNumCases (gInputFile);
@@ -80,14 +79,11 @@ int main(int argc, char *argv[]) {
 
   int deckNum = getShuffleNum(gInputFile);
   while (deckNum != -1) {
-    printf ("deckNum = %d\n", deckNum);
     shuffleDeck (deckNum, gShuffleOrders, gCards);
-    printDeck (gCards);
     deckNum = getShuffleNum(gInputFile);
   }
   
   printDeck (gCards);
-
   
   
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
@@ -128,9 +124,9 @@ void getShuffle (int shuffle[gMaxNumShuffles][gNumCardsInDeck], int shuffleNum, 
   fgets (str, gMaxLineLength, fp);
   str[strlen(str) + 1] = '/0';
 
-  shuffle[shuffleNum][0] = atoi(strtok(str, " "));
+  shuffle[shuffleNum][0] = atoi(strtok(str, " ")) - 1;
   for (int i = 1; i < gNumCardsInDeck; i++) {
-    shuffle[shuffleNum][i] = atoi(strtok(NULL, " "));
+    shuffle[shuffleNum][i] = atoi(strtok(NULL, " ")) - 1;
   }
 }
 void printShuffle (int shuffleNum, int shuffle[gMaxNumShuffles][gNumCardsInDeck]) {
@@ -228,7 +224,7 @@ void printValue (enum value value) {
       printf ("Ace");
       break;
     default:
-      printf ("Invalid Value");
+      printf ("Invalid Value [%d]", value);
       break;
   }
 }
@@ -261,5 +257,4 @@ void printDeck (int deck [gNumCardsInDeck]) {
   for (int i = 0; i < gNumCardsInDeck; i++) {
     printCard (deck[i]);
   }
-  printf ("\n");
 }
