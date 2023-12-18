@@ -59,31 +59,36 @@ int main(int argc, char *argv[]) {
     exit (EXIT_FAILURE);
   }
   else {
-    fprintf (stderr, "%s opened for reading.\n\n" , argv[1]);
+//    fprintf (stderr, "%s opened for reading.\n\n" , argv[1]);
   }
   /*-------------------------------FILE INITIALIZATION END--------------------------------*/
   /*--------------------------------MAIN PROGRAM START------------------------------------*/
 
-  // Initialise deck
-  initDeck(gCards);
 
   // Get input
   int numCases = getNumCases (gInputFile);
   removeBlankLine (gInputFile);
-  int numShuffles = getNumShuffles (gInputFile);
-  printf ("\n");
 
-  for (int i = 0; i < numShuffles; i++) {
-    getShuffle (gShuffleOrders, i, gInputFile);
-  }
 
-  int deckNum = getShuffleNum(gInputFile);
-  while (deckNum != -1) {
-    shuffleDeck (deckNum, gShuffleOrders, gCards);
-    deckNum = getShuffleNum(gInputFile);
+  for (int i = 0; i < numCases; i++) {
+
+    int numShuffles = getNumShuffles (gInputFile);
+    
+    // Initialise deck
+    initDeck(gCards);
+
+    for (int i = 0; i < numShuffles; i++) {
+      getShuffle (gShuffleOrders, i, gInputFile);
+    }
+
+    int deckNum = getShuffleNum(gInputFile);
+    while (deckNum != -1) {
+      shuffleDeck (deckNum, gShuffleOrders, gCards);
+      deckNum = getShuffleNum(gInputFile);
+    }
+
+    printDeck (gCards);
   }
-  
-  printDeck (gCards);
   
   
   /*--------------------------------MAIN PROGRAM END--------------------------------------*/
